@@ -1,4 +1,4 @@
-﻿function Invoke-CybCMUpdatesInstall {
+﻿function Invoke-CMUpdatesInstall {
     <#
     .SYNOPSIS
     .DESCRIPTION
