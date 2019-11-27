@@ -16,7 +16,11 @@
 
     [Parameter(Mandatory=$True,
         Position=2)]
-    [string]$SupName
+    [string]$SupName,
+
+    [Parameter(Mandatory=$False)]
+    [switch]
+    $TriggerAnyComplianceState
     )
 
 BEGIN {
@@ -34,7 +38,11 @@ PROCESS {
         #Push our script to remote computers
         Invoke-Command -ComputerName $ComputerName -ScriptBlock {
             $ApplicationClass = [WmiClass]"root\ccm\clientSDK:CCM_SoftwareUpdatesManager"
-            $NewUpdates = (Get-WmiObject -Namespace root\ccm\clientsdk -Query "SELECT * FROM CCM_SoftwareUpdate WHERE ComplianceState = '0'")
+            if($PSBoundParameters.ContainsKey('TriggerAnyComplianceState')){
+                $NewUpdates = (Get-WmiObject -Namespace root\ccm\clientsdk -Query "SELECT * FROM CCM_SoftwareUpdate")
+            } else{
+                $NewUpdates = (Get-WmiObject -Namespace root\ccm\clientsdk -Query "SELECT * FROM CCM_SoftwareUpdate WHERE ComplianceState = '0'")
+            }
             
             $WmiMethod_parameters = @{'Namespace'='root\ccm\clientsdk'
                                         'Class'='CCM_SoftwareUpdatesManager'
