@@ -63,7 +63,7 @@ PROCESS {
             $obj = New-Object psobject -Property $Properties
             $obj
 
-        } -ErrorAction SilentlyContinue -ErrorVariable ConnectionErrors -HideComputerName | Select ComputerName,InstallTriggered
+        } -ErrorAction SilentlyContinue -ErrorVariable ConnectionErrors -HideComputerName | Select-Object ComputerName,InstallTriggered
 
     }#If
 
@@ -103,7 +103,7 @@ PROCESS {
                 $obj
 
             } #Foreach
-        } -ErrorAction SilentlyContinue -ErrorVariable ConnectionErrors -HideComputerName | Select ComputerName,InstallTriggered
+        } -ErrorAction SilentlyContinue -ErrorVariable ConnectionErrors -HideComputerName | Select-Object ComputerName,InstallTriggered
     } #Else
     
 
